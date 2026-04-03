@@ -1,0 +1,38 @@
+name: "Experiment 3 - Dependency + SAST"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest tests/ -v
+
+      - name: Install Safety
+        run: pip install safety
+
+      - name: Dependency scan (Safety)
+        run: |
+          echo "=== DEPENDENCY SCAN START ==="
+          safety check --full-report || true
+          echo "=== DEPENDENCY SCAN END ==="
+
+      - name: Install Bandit
+        run: pip install bandit
+
+      - name: SAST scan (Bandit)
+        run: |
+          echo "=== SAST SCAN START ==="
+          bandit -r app/ -ll -ii || true
+          echo "=== SAST SCAN END ==="
