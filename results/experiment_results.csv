@@ -1,0 +1,5 @@
+experiment,configuration,run1_seconds,run2_seconds,run3_seconds,run4_seconds,average_seconds,overhead_vs_baseline
+1,Baseline (No Security),19,20,17,18,18.5,0
+2,Dependency Scan (Safety),32,27,29,29,29.3,10.8
+3,Dependency + SAST (Bandit),28,28,25,28,27.3,8.8
+4,Full Pipeline (Safety+Bandit+Trivy),55,47,51,54,51.8,33.3
